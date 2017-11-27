@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>用户列表</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="edge" />
+<script type="text/javascript" src="/easyui/1.5.1/jquery.min.js" charset="utf-8"></script>
+<link id="easyuiTheme" rel="stylesheet" type="text/css" href="/easyui/1.5.1/themes/default/easyui.css" />
+<script type="text/javascript" src="/easyui/1.5.1/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/easyui/1.5.1/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/ExtEasyUI.js" charset="utf-8"></script>
+<link id="easyuiTheme" rel="stylesheet" type="text/css" href="/css/icon.css" />
+<link id="easyuiTheme" rel="stylesheet" type="text/css" href="/css/cardl.css" />
+
+<script type="text/javascript" src="/js/layer/layer.js" charset="utf-8"></script>
+
+<script type="text/javascript" >
+$(function() {
+	//页面权限过滤
+	var operation_permission = 'xtgl_cdgl#add,xtgl_cdgl#edit,xtgl_cdgl#list,xtgl_cdgl#del,xtgl_jsgl#add,xtgl_jsgl#edit,xtgl_jsgl#delete,xtgl_jsgl#list,xtgl_yhgl#add,xtgl_yhgl#edit,xtgl_yhgl#upPwd,xtgl_yhgl#delete,xtgl_yhgl#list,xtgl_xtrzgl#list,jbcssz_kpxxsz#add,jbcssz_kpxxsz#delete,jbcssz_kpxxsz#edit,jbcssz_kpxxsz#list,jbcssz_gsxxgl#add,jbcssz_gsxxgl#delete,jbcssz_gsxxgl#edit,jbcssz_gsxxgl#list,jbcssz_bmxxgl#add,jbcssz_bmxxgl#delete,jbcssz_bmxxgl#edit,jbcssz_bmxxgl#list,jbcssz_czdgl#add,jbcssz_czdgl#delete,jbcssz_czdgl#edit,jbcssz_czdgl#list,jbcssz_sbgnszgl#list,jbcssz_czjgl#delete,jbcssz_czjgl#add,jbcssz_czjgl#edit,jbcssz_czjgl#list,jbcssz_kpkcgl#delete,jbcssz_kpkcgl#add,jbcssz_kpkcgl#list,jbcssz_csczsz#delete,jbcssz_csczsz#add,jbcssz_csczsz#list,yhkpgl_kpyhgl#list,yhkpgl_yhxxgl#list,yhkpgl_czczgl#list,yhkpgl_czzssz#list,yhkpgl_gnkgl#list,yhkpgl_gnkgl#edit,gjcssz_sdsz#add,gjcssz_sdsz#edit,gjcssz_sdsz#delete,gjcssz_sdsz#list,gjcssz_xlzdgl#delete,gjcssz_xlzdgl#edit,gjcssz_xlzdgl#add,gjcssz_xlzdgl#list,gjcssz_xlzdgl#addStation,gjcssz_xlzdgl#editStation,gjcssz_xlzdgl#reverse,gjcssz_xlzdgl#deleteStation,gjcssz_xlzdgl#stationList,gjcssz_cdxxsz#delete,gjcssz_cdxxsz#edit,gjcssz_cdxxsz#add,gjcssz_cdxxsz#list,gjcssz_cldj#add,gjcssz_cldj#edit,gjcssz_cldj#delete,gjcssz_cldj#list,gjcssz_zdjgl#add,gjcssz_zdjgl#edit,gjcssz_zdjgl#delete,gjcssz_zdjgl#list,gjcssz_xffssz#list,gjcssz_xffssz#addMod,gjcssz_xffssz#addType,gjcssz_xffssz#editMod,gjcssz_xffssz#deleteMod,gjcssz_xffasc#list,zdjgl_fxgjszk#list,jcbb_iccyjmxbb#page,jcbb_czcsbb#page,jcbb_yhbtyebb#page,jcbb_kkmxbb#page,jcbb_yhxjyebb#page,jcbb_yhbtmxbb#page,jcbb_czjlbb#page,jcbb_yyebb#jcbb_yyebb_page,gjbb_xfbb#page,gjbb_fdbb#page,gjbb_pbocSsjsbb#pbocSsjsbb,jcbb_bkmxbb#page';
+	var tag = $(this).contents().find("[hasPermission]");
+	tag.each(function(){
+    	 //获取权限编码
+    	 var permssionCode = $(this).attr("hasPermission").split(",");
+    	 var isFlag = true;
+    	 var permssions = operation_permission.split(",");
+    	 for(var i = 0;i < permssions.length;i++){
+    		 if(permssions[i].trim() == permssionCode){
+    			 isFlag = false;
+    			 break;
+    		 }
+    	 }
+    	 if(isFlag){
+    		 $(this).remove();
+    	 }
+     });
+});
+</script>
+</head>
+<body>
+	<div class="easyui-layout" data-options="fit:true">
+		<div data-options="region:'north',title:'查询条件',split:true,border:false" style="height:65px">
+			<table>
+				<tr>
+					<td style="width: 60px;">角色名称：</td>
+					<td><input id="name" name="name" type="text" class="easyui-textbox"/></td>
+					<td>公司：</td>
+					<td><select id="companyId" name="companyId" style="width: 300px; " class="easyui-textbox easyui-validatebox" data-options="required:true"></select></td>
+					<td>
+						<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="fnLoadGrid()" plain="true">开始检索</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div data-options="region:'center',title:'数据列表',border:false">
+			<div id="grid" data-options="border:false"></div>
+		</div>
+		
+		<div id="toolBtn" style="padding:5px;height:auto">
+			<div class="btnDiv">
+		            <a href="#" hasPermission = 'xtgl_jsgl#add', class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add();">添加</a>
+		            <a href="#" hasPermission = 'xtgl_jsgl#edit' class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit();">修改</a>
+		            <a href="#" hasPermission = 'xtgl_jsgl#delete' class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="del();">删除</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function fnLoadGrid(){
+			$('#grid').datagrid('load',{'name' : $('#name').val(),'companyId' : $("#companyId").combotree("getValue") });
+		}
+		
+		function add(){
+			fnEidtDialog(0);
+		}
+		
+		function edit(){
+			var row = $('#grid').datagrid('getSelected');
+			if(!row || !row.id){
+				parent.$.messager.alert('提示', '请选中一行！', 'info');
+				return;
+			}
+			fnEidtDialog(row.id);
+		}
+		
+		function del(){
+			var row = $('#grid').datagrid('getSelected');
+			if(!row || !row.id){
+				parent.$.messager.alert('提示', '请选中一行！', 'info');
+				return;
+			}
+			parent.$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+			    if (!r)
+			    	return;
+		    	$.post('/sysRoleController/deleteById.action',
+						{'id':row.id},function(rs){
+						if(rs.status == '200'){
+							parent.$.messager.alert('提示', '操作成功', 'info');
+							$('#grid').datagrid('reload');
+						}else{
+							parent.$.messager.alert('提示', rs.msg, 'info');
+						}
+				},'json');
+			}); 
+		}
+		
+		function fnEidtDialog(id){
+			var url = '';
+			if(id == 0){
+				url += '/sysRoleController/add.html';
+			}else{
+				url += '/sysRoleController/edit.html?id='+id;
+			}
+				
+			var dialog = system.modalDialog({
+				width : 700,
+				height : 550,
+				modal : true,
+				title : '编辑角色信息',
+				url : url,
+				buttons : [ {
+					text : '保存',
+					handler : function() {
+						dialog.find('iframe').get(0).contentWindow.fnSubmit(dialog, $('#grid'));
+					}
+				} ]
+			});
+		}
+		$(function(){
+			$('#companyId').combotree({
+	            url: '/basicController/getCompanyTree',
+	            multiple: false,
+	            required: false,
+	            panelHeight : 'auto'
+	        });
+			
+			
+			$('#grid').datagrid({
+				url:'/sysRoleController/queryListForPage',
+				striped : true,
+				rownumbers : true,
+				pagination : true,
+				fit : true,
+				singleSelect : true,
+				idField : 'id',
+				pageSize : 20,
+				pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
+				fit:true,
+				fitColumns:true,
+			    columns:[[ {
+					field : 'name',
+					title : '角色名称',
+					width : 180,
+					halign : 'center',
+					align : 'left'
+				}, {
+					field : 'status',
+					title : '是否可用',
+					width : 180,
+					halign : 'center',
+					align : 'left',
+					formatter : function(v,r){
+						if(v=='0')
+							return '不可用';
+						return '可用';
+					}
+				}, {
+					field : 'seq',
+					title : '排序',
+					width : 180,
+					halign : 'center',
+					align : 'left'
+				}, {
+					field : 'description',
+					title : '角色描述',
+					width : 180,
+					align : 'left'
+				},{
+					field : 'companyName',
+					title : '所属公司',
+					width : 180,
+					halign : 'center',
+					align : 'left'
+				}, {
+					field : 'createTime',
+					title : '创建时间',
+					width : 180,
+					halign : 'center',
+					align : 'left'
+				},{
+					field : 'updateTime',
+					title : '更新时间',
+					width : 180,
+					halign : 'center',
+					align : 'left'
+				}, {
+					field : 'operator',
+					title : '创建人',
+					width : 180,
+					halign : 'center',
+					align : 'left'
+				}
+				]],
+				toolbar:$("#toolBtn")
+			});
+		});
+	</script>
+</body>
+</html>

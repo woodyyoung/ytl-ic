@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="edge" />
+<script type="text/javascript" src="easyui/1.5.1/jquery.min.js" charset="utf-8"></script>
+<link id="easyuiTheme" rel="stylesheet" type="text/css" href="easyui/1.5.1/themes/default/easyui.css" />
+<script type="text/javascript" src="easyui/1.5.1/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="easyui/1.5.1/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/ExtEasyUI.js" charset="utf-8"></script>
+<link id="easyuiTheme" rel="stylesheet" type="text/css" href="/css/icon.css" />
+<link id="easyuiTheme" rel="stylesheet" type="text/css" href="/css/cardl.css" />
+
+<script type="text/javascript" src="js/layer/layer.js" charset="utf-8"></script>
+
+<script type="text/javascript" >
+$(function() {
+	//页面权限过滤
+	var operation_permission = 'xtgl_cdgl#add,xtgl_cdgl#edit,xtgl_cdgl#list,xtgl_cdgl#del,xtgl_jsgl#add,xtgl_jsgl#edit,xtgl_jsgl#delete,xtgl_jsgl#list,xtgl_yhgl#add,xtgl_yhgl#edit,xtgl_yhgl#upPwd,xtgl_yhgl#delete,xtgl_yhgl#list,xtgl_xtrzgl#list,jbcssz_kpxxsz#add,jbcssz_kpxxsz#delete,jbcssz_kpxxsz#edit,jbcssz_kpxxsz#list,jbcssz_gsxxgl#add,jbcssz_gsxxgl#delete,jbcssz_gsxxgl#edit,jbcssz_gsxxgl#list,jbcssz_bmxxgl#add,jbcssz_bmxxgl#delete,jbcssz_bmxxgl#edit,jbcssz_bmxxgl#list,jbcssz_czdgl#add,jbcssz_czdgl#delete,jbcssz_czdgl#edit,jbcssz_czdgl#list,jbcssz_sbgnszgl#list,jbcssz_czjgl#delete,jbcssz_czjgl#add,jbcssz_czjgl#edit,jbcssz_czjgl#list,jbcssz_kpkcgl#delete,jbcssz_kpkcgl#add,jbcssz_kpkcgl#list,jbcssz_csczsz#delete,jbcssz_csczsz#add,jbcssz_csczsz#list,yhkpgl_kpyhgl#list,yhkpgl_yhxxgl#list,yhkpgl_czczgl#list,yhkpgl_czzssz#list,yhkpgl_gnkgl#list,yhkpgl_gnkgl#edit,gjcssz_sdsz#add,gjcssz_sdsz#edit,gjcssz_sdsz#delete,gjcssz_sdsz#list,gjcssz_xlzdgl#delete,gjcssz_xlzdgl#edit,gjcssz_xlzdgl#add,gjcssz_xlzdgl#list,gjcssz_xlzdgl#addStation,gjcssz_xlzdgl#editStation,gjcssz_xlzdgl#reverse,gjcssz_xlzdgl#deleteStation,gjcssz_xlzdgl#stationList,gjcssz_cdxxsz#delete,gjcssz_cdxxsz#edit,gjcssz_cdxxsz#add,gjcssz_cdxxsz#list,gjcssz_cldj#add,gjcssz_cldj#edit,gjcssz_cldj#delete,gjcssz_cldj#list,gjcssz_zdjgl#add,gjcssz_zdjgl#edit,gjcssz_zdjgl#delete,gjcssz_zdjgl#list,gjcssz_xffssz#list,gjcssz_xffssz#addMod,gjcssz_xffssz#addType,gjcssz_xffssz#editMod,gjcssz_xffssz#deleteMod,gjcssz_xffasc#list,zdjgl_fxgjszk#list,jcbb_iccyjmxbb#page,jcbb_czcsbb#page,jcbb_yhbtyebb#page,jcbb_kkmxbb#page,jcbb_yhxjyebb#page,jcbb_yhbtmxbb#page,jcbb_czjlbb#page,jcbb_yyebb#jcbb_yyebb_page,gjbb_xfbb#page,gjbb_fdbb#page,gjbb_pbocSsjsbb#pbocSsjsbb,jcbb_bkmxbb#page';
+	var tag = $(this).contents().find("[hasPermission]");
+	tag.each(function(){
+    	 //获取权限编码
+    	 var permssionCode = $(this).attr("hasPermission").split(",");
+    	 var isFlag = true;
+    	 var permssions = operation_permission.split(",");
+    	 for(var i = 0;i < permssions.length;i++){
+    		 if(permssions[i].trim() == permssionCode){
+    			 isFlag = false;
+    			 break;
+    		 }
+    	 }
+    	 if(isFlag){
+    		 $(this).remove();
+    	 }
+     });
+});
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content="All Rights Reserved, Copyright (C) 2017, Cardlan, Ltd." />
+
+<script type="text/javascript" src="js/fusioncharts/fusioncharts.js"></script>
+<script type="text/javascript" src="js/fusioncharts/themes/fusioncharts.theme.fint.js"></script>
+<style type="text/css">
+	.table1{
+		width: 100%;
+		border: 0px;
+		font-size: 14px;
+	}	
+	.table1 tr{
+		height: 30px;
+	}
+</style>
+<script type="text/javascript">
+$(function(){
+	var myChart = new FusionCharts({"type": "msline","renderAt": "chartContainer","width": "100%","height": "80%","dataFormat": "json"});           
+	myChart.setJSONUrl("/indexCrystal");  
+	myChart.render("chartContainer");
+});
+</script>
+</head>
+<body class="easyui-layout">
+
+
+	<div data-options="region:'center',border:false">
+		<div class="easyui-layout" data-options="fit:true">
+			<div data-options="region:'north',title:'通卡业务营业数据统计情况',split:true"
+				style="height: 210px;width: 200px;">
+				<table class="table1" style="padding: 5px;">
+					<tr>
+						<td>终端机总数：<span style="font-weight: bold;">4</span> 台</td>
+						<td>开卡总数：<span style="font-weight: bold;">50</span> 张</td>
+						<td>昨日开卡总数：<span style="font-weight: bold;">0</span> 张</td>
+					</tr>
+					<tr>
+						<td>充值总金额：<span style="font-weight: bold;">107291.00</span> 元</td>
+						<td>充值点充值总金额：<span style="font-weight: bold;">107271.00</span> 元</td>
+						<td>APP空中充值总金额：<span style="font-weight: bold;">20.00</span> 元</td>
+					</tr>
+					<tr>
+						<td>消费总金额：<span style="font-weight: bold;">0.06</span> 元</td>
+						<td>一卡通消费总金额：<span style="font-weight: bold;">0.00</span> 元</td>
+						<td>二维码消费总金额：<span style="font-weight: bold;">0.06</span> 元</td>
+						
+					</tr>
+					<tr>
+						<td>昨日充值总金额：<span style="font-weight: bold;">0.00</span> 元</td>
+						<td>昨日消费总金额：<span style="font-weight: bold;">0.00</span> 元</td>
+						<td>昨日消费总笔数：<span style="font-weight: bold;">0</span> 次</td>
+					</tr>
+					<tr>
+						<td>昨日赠送总金额：<span style="font-weight: bold;">0.00</span> 元</td>
+						<td>昨日赠送总积分：<span style="font-weight: bold;">0</span> 分</td>
+					</tr>
+				</table>
+			</div>
+			<div data-options="region:'center',title:'充值/消费数据趋势'" style="">
+				<div id="chartContainer"></div>
+			</div>
+		</div>
+	</div>
+	<div data-options="region:'east',split:true,title:'充值点营业数据'" style="width: 20%">
+		<table class="easyui-datagrid" data-options="singleSelect:true,collapsible:true,border:false,url:'/indexRecharge'">
+			<thead>
+				<tr>
+					<th data-options="field:'rechargeSiteName',align:'left,',fitColumns:false">充值点名称</th>
+					<th data-options="field:'rechargeMoney',align:'left',fitColumns:false">充值金额</th>
+					<th data-options="field:'giveMoneys',align:'left',fitColumns:false">赠送金额</th>
+				</tr>
+			</thead>
+		</table>
+	
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="edge" />
+<script type="text/javascript" src="easyui/1.5.1/jquery.min.js" charset="utf-8"></script>
+<link id="easyuiTheme" rel="stylesheet" type="text/css" href="easyui/1.5.1/themes/default/easyui.css" />
+<script type="text/javascript" src="easyui/1.5.1/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="easyui/1.5.1/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/ExtEasyUI.js" charset="utf-8"></script>
+<link id="easyuiTheme" rel="stylesheet" type="text/css" href="css/icon.css" />
+<link id="easyuiTheme" rel="stylesheet" type="text/css" href="css/cardl.css" />
+<script type="text/javascript" src="js/layer/layer.js" charset="utf-8"></script>
+
+<script type="text/javascript" >
+$(function() {
+	//页面权限过滤
+	var operation_permission = 'xtgl_cdgl#add,xtgl_cdgl#edit,xtgl_cdgl#list,xtgl_cdgl#del,xtgl_jsgl#add,xtgl_jsgl#edit,xtgl_jsgl#delete,xtgl_jsgl#list,xtgl_yhgl#add,xtgl_yhgl#edit,xtgl_yhgl#upPwd,xtgl_yhgl#delete,xtgl_yhgl#list,xtgl_xtrzgl#list,jbcssz_kpxxsz#add,jbcssz_kpxxsz#delete,jbcssz_kpxxsz#edit,jbcssz_kpxxsz#list,jbcssz_gsxxgl#add,jbcssz_gsxxgl#delete,jbcssz_gsxxgl#edit,jbcssz_gsxxgl#list,jbcssz_bmxxgl#add,jbcssz_bmxxgl#delete,jbcssz_bmxxgl#edit,jbcssz_bmxxgl#list,jbcssz_czdgl#add,jbcssz_czdgl#delete,jbcssz_czdgl#edit,jbcssz_czdgl#list,jbcssz_sbgnszgl#list,jbcssz_czjgl#delete,jbcssz_czjgl#add,jbcssz_czjgl#edit,jbcssz_czjgl#list,jbcssz_kpkcgl#delete,jbcssz_kpkcgl#add,jbcssz_kpkcgl#list,jbcssz_csczsz#delete,jbcssz_csczsz#add,jbcssz_csczsz#list,yhkpgl_kpyhgl#list,yhkpgl_yhxxgl#list,yhkpgl_czczgl#list,yhkpgl_czzssz#list,yhkpgl_gnkgl#list,yhkpgl_gnkgl#edit,gjcssz_sdsz#add,gjcssz_sdsz#edit,gjcssz_sdsz#delete,gjcssz_sdsz#list,gjcssz_xlzdgl#delete,gjcssz_xlzdgl#edit,gjcssz_xlzdgl#add,gjcssz_xlzdgl#list,gjcssz_xlzdgl#addStation,gjcssz_xlzdgl#editStation,gjcssz_xlzdgl#reverse,gjcssz_xlzdgl#deleteStation,gjcssz_xlzdgl#stationList,gjcssz_cdxxsz#delete,gjcssz_cdxxsz#edit,gjcssz_cdxxsz#add,gjcssz_cdxxsz#list,gjcssz_cldj#add,gjcssz_cldj#edit,gjcssz_cldj#delete,gjcssz_cldj#list,gjcssz_zdjgl#add,gjcssz_zdjgl#edit,gjcssz_zdjgl#delete,gjcssz_zdjgl#list,gjcssz_xffssz#list,gjcssz_xffssz#addMod,gjcssz_xffssz#addType,gjcssz_xffssz#editMod,gjcssz_xffssz#deleteMod,gjcssz_xffasc#list,zdjgl_fxgjszk#list,jcbb_iccyjmxbb#page,jcbb_czcsbb#page,jcbb_yhbtyebb#page,jcbb_kkmxbb#page,jcbb_yhxjyebb#page,jcbb_yhbtmxbb#page,jcbb_czjlbb#page,jcbb_yyebb#jcbb_yyebb_page,gjbb_xfbb#page,gjbb_fdbb#page,gjbb_pbocSsjsbb#pbocSsjsbb,jcbb_bkmxbb#page';
+	var tag = $(this).contents().find("[hasPermission]");
+	tag.each(function(){
+    	 //获取权限编码
+    	 var permssionCode = $(this).attr("hasPermission").split(",");
+    	 var isFlag = true;
+    	 var permssions = operation_permission.split(",");
+    	 for(var i = 0;i < permssions.length;i++){
+    		 if(permssions[i].trim() == permssionCode){
+    			 isFlag = false;
+    			 break;
+    		 }
+    	 }
+    	 if(isFlag){
+    		 $(this).remove();
+    	 }
+     });
+});
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright"
+	content="All Rights Reserved, Copyright (C) 2017, Cardlan, Ltd." />
+<title>深圳蓝泰源一卡通管理系统</title>
+</head>
+<body class="easyui-layout">
+	<!-- begin of header -->
+	<div class="cl-header"
+		data-options="region:'north',border:false,split:true" style="height: 60px;">
+		<div class="cl-header-left" >
+			<table>
+				<tr>
+					<td><img  alt=""
+						src="images/logo.jpg" width=70 height = 45 ></td>
+					<td valign="middle"><span
+						style="font-size: 18px; font-weight: bold; color: #fff;">一卡通系统管理平台</span></td>
+				</tr>
+			</table>
+		</div>
+		<div class="cl-header-right">
+			<p>
+			    <strong class="easyui-tooltip">004740</strong>|
+				<strong class="easyui-tooltip">admin</strong>，欢迎您！
+				|<a href="#" onclick="loginOut();">安全退出   </a>
+			</p>
+			<p>
+			  <!--  <a href="#">网站首页</a>| --><a href="#">帮助中心</a>|
+			   <a href="javascript:void(0)" onclick="fnShowUpdatePwdWin()">修改密码</a>|
+			   &nbsp;主题：
+				<select id="themes" style="width:70px;height: 20px;" onchange="setTheme();">
+					<option value="default"> 默认</option>
+					<option value="black">主题一</option>
+					<option value="bootstrap">主题二</option>
+					<option value="metro-blue">主题三</option>
+					<option value="metro-gray">主题四</option>
+					<option value="metro-green">主题五</option>
+					<option value="metro-orange">主题六</option>
+					<option value="metro-red">主题七</option>
+					<option value="ui-cupertino">主题八</option>
+					<option value="ui-pepper-grinder">主题九</option>
+					<option value="ui-sunny">主题十</option>
+				</select>  
+			</p>
+		</div>
+	</div>
+	<!-- end of header -->
+	<!-- begin of sidebar -->
+	<div class="cl-sidebar"
+		data-options="region:'west',split:true,border:true,title:'一卡通管理系统',width:200">
+		<div class="easyui-accordion" data-options="border:false,fit:true">
+			<div title="常用代码设置" data-options="iconCls:'icon-page-white-gear'" style="padding: 5px;">
+					<ul class="easyui-tree cl-side-tree">
+						<li iconCls="icon-organization">
+									<a href="javascript:void(0)" data-icon="icon-organization" data-link="/module/basicSetting/basicSetting.html"
+									iframe="1">卡物理类型</a>
+								</li>
+							<li iconCls="icon-node-tree16">
+									<a href="javascript:void(0)" data-icon="icon-node-tree16" data-link="/deptManageController/dept_list.action"
+									iframe="1">卡应用类型</a>
+								</li>
+							<li iconCls="icon-folder-image">
+									<a href="javascript:void(0)" data-icon="icon-folder-image" data-link="/cardManageController/card_list.action"
+									iframe="1">交易类型</a>
+								</li>
+							<li iconCls="icon-money-yen">
+									<a href="javascript:void(0)" data-icon="icon-money-yen" data-link="/timeMoneySetController/timeMoneySet_list"
+									iframe="1">补卡标识</a>
+								</li>
+							<li iconCls="icon-coins">
+									<a href="javascript:void(0)" data-icon="icon-coins" data-link="/rechargeSiteController/rechargeSite_list.action"
+									iframe="1">退卡标识</a>
+								</li>
+							<li iconCls="icon-computer-add">
+									<a href="javascript:void(0)" data-icon="icon-computer-add" data-link="/cardRechargeController/recharge_list.action"
+									iframe="1">挂失类型</a>
+								</li>
+							<li iconCls="icon-house-star">
+									<a href="javascript:void(0)" data-icon="icon-house-star" data-link="/cardInventoryController/cardInventory_list.action"
+									iframe="1">异常代码</a>
+								</li>
+							<li iconCls="icon-computer-edit">
+									<a href="javascript:void(0)" data-icon="icon-computer-edit" data-link="/equipmentSetController/equipmentSet_edit.action"
+									iframe="1">通用参数</a>
+								</li>
+							<li iconCls="icon-computer-edit">
+									<a href="javascript:void(0)" data-icon="icon-computer-edit" data-link="/equipmentSetController/equipmentSet_edit.action"
+									iframe="1">设备类型</a>
+								</li>
+							</ul>
+				</div>
+			<div title="基础资料设置" data-options="iconCls:'icon-car'" style="padding: 5px;">
+					<ul class="easyui-tree cl-side-tree">
+						<li iconCls="icon-time">
+									<a href="javascript:void(0)" data-icon="icon-time" data-link="/busset/timeframe/listPage"
+									iframe="1">票制定义</a>
+								</li>
+							<li iconCls="icon-chart-line">
+									<a href="javascript:void(0)" data-icon="icon-chart-line" data-link="/busset/station/listPage"
+									iframe="1">部门信息</a>
+								</li>
+							<li iconCls="icon-car">
+									<a href="javascript:void(0)" data-icon="icon-car" data-link="/busset/motor/listPage"
+									iframe="1">人员类型</a>
+								</li>
+							<li iconCls="icon-car-add">
+									<a href="javascript:void(0)" data-icon="icon-car-add" data-link="/busset/vehicle/listPage"
+									iframe="1">人员信息</a>
+								</li>
+							<li iconCls="icon-laptop">
+									<a href="javascript:void(0)" data-icon="icon-laptop" data-link="/busset/terminal/listPage"
+									iframe="1">设备管理</a>
+								</li>
+							<li iconCls="icon-cart-edit">
+									<a href="javascript:void(0)" data-icon="icon-cart-edit" data-link="/busset/consume/index"
+									iframe="1">线路信息</a>
+								</li>
+							</ul>
+				</div>
+			<div title="用户信息管理" data-options="iconCls:'icon-users'" style="padding: 5px;">
+					<ul class="easyui-tree cl-side-tree">
+						<li iconCls="icon-users">
+									<a href="javascript:void(0)" data-icon="icon-users" data-link="/cardUserController/cardUser_list"
+									iframe="1">角色管理</a>
+								</li>
+							<li iconCls="icon-newspaper">
+									<a href="javascript:void(0)" data-icon="icon-newspaper" data-link="/cardController/card_list"
+									iframe="1">用户管理</a>
+								</li>
+							<li iconCls="icon-plugin-add">
+									<a href="javascript:void(0)" data-icon="icon-plugin-add" data-link="/functionCard/list"
+									iframe="1">权限查看</a>
+								</li>
+							
+							</ul>
+				</div>
+			<div title="报表中心" data-options="iconCls:'icon-chart-curve'" style="padding: 5px;">
+					<ul class="easyui-tree cl-side-tree">
+						<li iconCls="icon-page-white-office">
+									<span>基础报表</span>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/businessVolumeReport/page"
+													iframe="1">营业额汇总报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/pledgeTotal/pledge_total_repor"
+													iframe="1">IC卡押金汇总报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/rechargeGive/recharge_give_report"
+													iframe="1">充值赠送报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/userBalance/user_balance_report"
+													iframe="1">用户现金余额报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/rechargeNum/recharge_num_report"
+													iframe="1">充值次数报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/rechargeTotal/recharge_total_report"
+													iframe="1">卡片充值汇总报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/registerCard/register_card_report"
+													iframe="1">开卡明细报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/userSubsidy/subsidy_report"
+													iframe="1">用户补贴明细报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/rechargeMoney/page"
+													iframe="1">充值金额报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/rechargeSubsidy/recharge_subsidy_report"
+													iframe="1">用户充值补贴报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/pledgeDetail/pledge_detail_report"
+													iframe="1">IC卡押金明细报表</a>
+												</li>
+											</ul>
+									</li>
+							<li iconCls="icon-page-white-office">
+									<span>公交报表</span>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/bus_report/ndsrtjbb"
+													iframe="1">年度收入统计报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/bus_report/listPage"
+													iframe="1">用户消费报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/bus_report/pbocSsjsbb"
+													iframe="1">公交pboc上送结算报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/bus_report/gjbb_clydsrbb_page"
+													iframe="1">车辆月度收入报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/bus_report/subsection/list"
+													iframe="1">分段记录报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/bus_report/vehicle_cardtype/list"
+													iframe="1">车辆卡类汇总报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/bus_report/zdxfhz_report/list"
+													iframe="1">终端消费汇总报表</a>
+												</li>
+											</ul>
+									<ul>
+											<li iconCls="icon-page-white-excel">
+													<a href="javascript:void(0)" data-icon="icon-page-white-excel" data-link="/bus_report/gjbb_ystjbb/list"
+													iframe="1">营收统计</a>
+												</li>
+											</ul>
+									</li>
+							</ul>
+				</div>
+			<div title="系统管理" data-options="iconCls:'icon-sys'" style="padding: 5px;">
+					<ul class="easyui-tree cl-side-tree">
+						<li iconCls="icon-text-list-bullets">
+									<a href="javascript:void(0)" data-icon="icon-text-list-bullets" data-link="/moduleController/list"
+									iframe="1">菜单管理</a>
+								</li>
+							<li iconCls="icon-group-edit">
+									<a href="javascript:void(0)" data-icon="icon-group-edit" data-link="/sysRoleController/list"
+									iframe="1">角色管理</a>
+								</li>
+							<li iconCls="icon-group">
+									<a href="javascript:void(0)" data-icon="icon-group" data-link="/sysUserController/list"
+									iframe="1">用户管理</a>
+								</li>
+							<li iconCls="icon-application-error">
+									<a href="javascript:void(0)" data-icon="icon-application-error" data-link="/sysLogController/list"
+									iframe="1">系统日志管理</a>
+								</li>
+							<li iconCls="icon-laptop">
+									<a href="javascript:void(0)" data-icon="icon-laptop" data-link="/accredit/page"
+									iframe="1">系统授权</a>
+								</li>
+							</ul>
+				</div>
+			</div>
+	</div>
+	<!-- end of sidebar -->
+	<!-- begin of main -->
+	<div class="cl-main" data-options="region:'center'">
+		<div id="cl-tabs" class="easyui-tabs"
+			data-options="border:false,fit:true">
+			<div title="首页" data-options="closable:false,iconCls:'icon-tip',cls:'pd3'">
+				<div class="light-info">
+					<div class="light-tip icon-tip"></div>
+				</div>
+				<iframe scrolling="no" frameborder="0" id="content" style="width:100%;height:99%;"></iframe>
+			</div>
+		</div>
+	</div>
+	<!-- end of main -->
+	<!-- begin of footer -->
+	<div class="cl-footer"
+		data-options="region:'south',border:true,split:true">
+		深圳市蓝泰源信息计算股份有限公司&copy;2010~<span id="div_now_year"></span> 粤ICP备07042502号
+	</div>
+	<div id="update_pwd_win">
+		<form id="update_pwd_form">
+			<table>
+				<tr>
+					<td>原密码：</td>
+					<td><input id="oldPwd" type="password" name="oldPwd" required class="easyui-textbox" data-options="validType:'length[1,10]'"/></td>
+				</tr>
+				<tr>
+					<td>新密码：</td>
+					<td><input id="newPwd" type="password" name="newPwd" required class="easyui-textbox" data-options="validType:'length[1,10]'"/></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<!-- end of footer -->
+	<script type="text/javascript">
+		$(function() {
+			copyright=new Date();//取得当前的日期
+			update=copyright.getFullYear();//取得当前的年份
+			$("#div_now_year").html(update);
+			
+			$('.cl-side-tree a').bind("click", function() {
+				var title = $(this).text();
+				var url = $(this).attr('data-link');
+				var iconCls = $(this).attr('data-icon');
+				var iframe = $(this).attr('iframe') == 1 ? true : false;
+				addTab(title, url, iconCls, iframe);
+			});
+			readUserDeadline();
+			
+			document.getElementById("content").src = "indexBusiness.html";
+			
+			
+			var theme = 'default';
+			$("#themes").find("option[value="+theme+"]").attr("selected",true);  
+		})
+		
+		function setTheme(theme){
+			var theme = $("#themes").val();
+			$.ajax({
+     			url : '/theme',
+    			data: {theme:theme},
+    			type: "POST",
+    			success : function(data){ 
+    				window.top.document.location = "index";
+    			}
+    		}); 
+		}
+		
+		//查看使用日期是否到期
+		function readUserDeadline(){
+			setTimeout(function(){
+				$.ajax({
+					dataType : 'json',
+					type : "post",
+					url : '/login/readUserDeadline',
+					success : function(rs) {
+						if (!!rs && rs.status == 200 ) {
+							$.messager.alert('消息','该商户的使用期限即将到期，到期时间为：'+rs.data,'info');
+						}
+					}
+				});
+			} ,5000) ;
+			
+		}
+		
+		
+		function loginOut(){
+			document.location = "/login/loginOut";
+		}
+
+		/**
+		 * Name 载入树形菜单 
+		 */
+		$('#cl-side-tree').tree({
+			url : 'temp/menu.php',
+			cache : false,
+			onClick : function(node) {
+				var url = node.attributes['url'];
+				if (url == null || url == "") {
+					return false;
+				} else {
+					addTab(node.text, url, '', node.attributes['iframe']);
+				}
+			}
+		});
+
+		/**
+		 * Name 选项卡初始化
+		 */
+		$('#cl-tabs').tabs({
+			tools : [ {
+				iconCls : 'icon-reload',
+				border : false,
+				handler : function() {
+					var tabs = $('#cl-tabs');
+					var selectTab = tabs.tabs('getSelected');
+				    var url =$(selectTab.panel('options').content).attr('src');
+				    tabs.tabs('update', {
+				        tab : selectTab,
+				        options : {href : url}
+					});
+				}
+			},{
+				iconCls : 'icon-cancel',
+				border : false,
+				handler : function() {
+					removeAllRightContentTabs();
+				}
+			} ]
+		});
+
+		/**
+		 * Name 添加菜单选项
+		 * Param title 名称
+		 * Param href 链接
+		 * Param iconCls 图标样式
+		 * Param iframe 链接跳转方式（true为iframe，false为href）
+		 */
+		function addTab(title, href, iconCls, iframe) {
+			var tabPanel = $('#cl-tabs');
+			if (!tabPanel.tabs('exists', title)) {
+				var content = '<iframe scrolling="auto" frameborder="0"  src="'
+						+ href + '" style="width:100%;height:99%;"></iframe>';
+				if (iframe) {
+					tabPanel.tabs('add', {
+						title : title,
+						content : content,
+						iconCls : iconCls,
+						fit : true,
+						cls : 'pd3',
+						closable : true
+					});
+				} else {
+					tabPanel.tabs('add', {
+						title : title,
+						href : href,
+						iconCls : iconCls,
+						fit : true,
+						cls : 'pd3',
+						closable : true
+					});
+				}
+			} else {
+				tabPanel.tabs('select', title);
+			}
+		}
+		/**
+		 * Name 移除菜单选项
+		 */
+		function removeTab() {
+			var tabPanel = $('#cl-tabs');
+			var tab = tabPanel.tabs('getSelected');
+			if (tab) {
+				var index = tabPanel.tabs('getTabIndex', tab);
+				tabPanel.tabs('close', index);
+			}
+		}
+		function fnShowUpdatePwdWin(){
+			var dialog = $('#update_pwd_win').dialog({    
+			    title: '修改登录密码',    
+			    width: 250,    
+			    height: 150,    
+			    closed: false,    
+			    cache: false,    
+			    modal: true,
+			    buttons:[{
+					text:'保存',
+					handler:function(){
+						if(!$("#update_pwd_form").form('enableValidation').form('validate'))
+							return
+						$.post('/sysUserController/updatePwd',{
+							'oldPwd' : $('#oldPwd').passwordbox('getValue'),
+							'newPwd' : $('#newPwd').passwordbox('getValue')
+						},function(rs){
+							if(rs.status=='200')
+								location.href = "/login/loginOut";
+							else
+								$.messager.alert('提示',rs.msg,'info');
+						},'json');
+					}
+			    },{
+					text:'关闭',
+					handler:function(){
+						dialog.dialog('close');
+					}
+				}]
+			});
+		}
+		
+		/*移除所有标签页*/
+		function removeAllRightContentTabs(){
+			 var tabs = $("#cl-tabs").tabs('tabs');
+			for(var i=0;i<tabs.length;i++){
+				if('首页'!=tabs[i].panel("options").title){
+					 $("#cl-tabs").tabs('close',tabs[i].panel("options").title);
+				}
+					
+			}
+			if($("#cl-tabs").tabs('tabs').length>1){
+				removeAllRightContentTabs();
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+	<localRepository>D:\apache-maven-3.3.3/repository</localRepository>
+	<interactiveMode>true</interactiveMode>
+    <offline>false</offline>
+    <pluginGroups>
+        <pluginGroup>org.mortbay.jetty</pluginGroup>
+        <pluginGroup>org.jenkins-ci.tools</pluginGroup>
+    </pluginGroups>
+	
+	<!--配置权限,使用默认用户-->
+	<servers>
+		<server>
+			<id>nexus-releases</id>
+			<username>deployment</username>
+			<password>deployment123</password>
+		</server>
+		<server> 
+			<id>nexus-snapshots</id>
+			<username>deployment</username>
+			<password>deployment123</password>
+		</server>
+	</servers>
+
+    <mirrors>
+	<!--使用镜像的话，所有下载包都必须从这里下载-->
+		 <mirror>
+			  <id>central</id>
+			  <mirrorOf>*</mirrorOf>
+			  <name>Human Readable Name for this Mirror.</name>
+			  <url>http://10.1.254.80:8081/nexus/content/groups/public/</url>
+		</mirror>
+    </mirrors>
+
+	<profiles>
+		<profile>
+		   <id>ssm</id>
+		   <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>1.8</jdk>
+            </activation>
+            <properties>  
+                <maven.compiler.source>1.8</maven.compiler.source>  
+                <maven.compiler.target>1.8</maven.compiler.target>  
+                <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>  
+            </properties>
+			   <!-- <activation>
+                    <activeByDefault>true</activeByDefault>
+                    <jdk>1.6</jdk>
+                </activation>-->
+			    <repositories>
+					<!-- 私有库地址-->
+				    <repository>
+						<id>nexus</id>
+						<url>http://10.1.254.80:8081/nexus/content/groups/public/</url>
+						<releases>
+							<enabled>true</enabled>
+						</releases>
+						<snapshots>
+							<enabled>true</enabled>
+						</snapshots>
+					</repository>
+				</repositories>      
+				<pluginRepositories>
+					<!--插件库地址-->
+					<pluginRepository>
+						<id>nexus</id>
+						<url>http://10.1.254.80:8081/nexus/content/groups/public/</url>
+						<releases>
+							<enabled>true</enabled>
+						</releases>
+						<snapshots>
+							<enabled>true</enabled>
+					   </snapshots>
+					</pluginRepository>
+				</pluginRepositories>
+			</profile>
+			<profile>
+			<id>sonar</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- Example for MySQL-->
+				<sonar.jdbc.url>
+					jdbc:mysql://10.1.254.79:3306/sonarqube?useUnicode=true&amp;characterEncoding=utf8
+				</sonar.jdbc.url>
+				<sonar.jdbc.username>root</sonar.jdbc.username>
+				<sonar.jdbc.password>root</sonar.jdbc.password>
+
+				<!-- Optional URL to server. Default value is http://localhost:9000 -->
+				<sonar.host.url>
+					http://10.1.254.77:9090/sonarqube/
+				</sonar.host.url>
+			</properties>
+		</profile>
+	</profiles>
+	
+	<!--激活profile-->
+	<activeProfiles>
+		<activeProfile>ssm</activeProfile>
+	</activeProfiles>
+	
+</settings>

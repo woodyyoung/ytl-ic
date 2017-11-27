@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lty.ic.gw.mapper.ZHDataBufferMapper" >
+  <resultMap id="BaseResultMap" type="com.lty.ic.gw.bean.ZHDataBuffer" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="recordtype" property="recordtype" jdbcType="VARCHAR" />
+    <result column="merchant_id" property="merchantId" jdbcType="VARCHAR" />
+    <result column="data_buffer" property="dataBuffer" jdbcType="VARCHAR" />
+    <result column="errcode" property="errcode" jdbcType="INTEGER" />
+    <result column="inputfilename" property="inputfilename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, recordtype, merchant_id, data_buffer, errcode, inputfilename
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lty.ic.gw.bean.ZHDataBuffer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ZH_DATABUFFER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart >=0" >
+      limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="int" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZH_DATABUFFER
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="int" >
+    delete from ZH_DATABUFFER
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lty.ic.gw.bean.ZHDataBuffer" >
+    delete from ZH_DATABUFFER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lty.ic.gw.bean.ZHDataBuffer" >
+    insert into ZH_DATABUFFER (order_id, recordtype, merchant_id, 
+      data_buffer, errcode, inputfilename
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{recordtype,jdbcType=VARCHAR}, #{merchantId,jdbcType=VARCHAR}, 
+      #{dataBuffer,jdbcType=VARCHAR}, #{errcode,jdbcType=INTEGER}, #{inputfilename,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lty.ic.gw.bean.ZHDataBuffer" >
+    insert into ZH_DATABUFFER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="recordtype != null" >
+        recordtype,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="dataBuffer != null" >
+        data_buffer,
+      </if>
+      <if test="errcode != null" >
+        errcode,
+      </if>
+      <if test="inputfilename != null" >
+        inputfilename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="recordtype != null" >
+        #{recordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataBuffer != null" >
+        #{dataBuffer,jdbcType=VARCHAR},
+      </if>
+      <if test="errcode != null" >
+        #{errcode,jdbcType=INTEGER},
+      </if>
+      <if test="inputfilename != null" >
+        #{inputfilename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lty.ic.gw.bean.ZHDataBuffer" resultType="java.lang.Integer" >
+    select count(*) from ZH_DATABUFFER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ZH_DATABUFFER
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.recordtype != null" >
+        recordtype = #{record.recordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataBuffer != null" >
+        data_buffer = #{record.dataBuffer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.errcode != null" >
+        errcode = #{record.errcode,jdbcType=INTEGER},
+      </if>
+      <if test="record.inputfilename != null" >
+        inputfilename = #{record.inputfilename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ZH_DATABUFFER
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      recordtype = #{record.recordtype,jdbcType=VARCHAR},
+      merchant_id = #{record.merchantId,jdbcType=VARCHAR},
+      data_buffer = #{record.dataBuffer,jdbcType=VARCHAR},
+      errcode = #{record.errcode,jdbcType=INTEGER},
+      inputfilename = #{record.inputfilename,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lty.ic.gw.bean.ZHDataBuffer" >
+    update ZH_DATABUFFER
+    <set >
+      <if test="recordtype != null" >
+        recordtype = #{recordtype,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataBuffer != null" >
+        data_buffer = #{dataBuffer,jdbcType=VARCHAR},
+      </if>
+      <if test="errcode != null" >
+        errcode = #{errcode,jdbcType=INTEGER},
+      </if>
+      <if test="inputfilename != null" >
+        inputfilename = #{inputfilename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lty.ic.gw.bean.ZHDataBuffer" >
+    update ZH_DATABUFFER
+    set recordtype = #{recordtype,jdbcType=VARCHAR},
+      merchant_id = #{merchantId,jdbcType=VARCHAR},
+      data_buffer = #{dataBuffer,jdbcType=VARCHAR},
+      errcode = #{errcode,jdbcType=INTEGER},
+      inputfilename = #{inputfilename,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

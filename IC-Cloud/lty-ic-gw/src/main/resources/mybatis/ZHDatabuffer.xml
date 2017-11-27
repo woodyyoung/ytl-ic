@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lty.ic.gw.mapper.ZHDataBufferMapper">
+    
+    <!-- 查询IC卡类型信息 -->
+    <select id="queryCardType"  resultType="java.util.Map">
+		SELECT cardtype_id
+		      ,cardtype_name
+		      ,merchant_id
+		  FROM SZ_CARDTYPE
+    </select>
+    
+    <!-- 批量插入数据包 -->
+    <insert id="batchInsertDatabuffer"  parameterType="java.util.List">  
+    	insert into 
+        ZH_DATABUFFER(
+        		 recordtype,
+		         merchant_id,
+		         data_buffer,
+		         errcode,
+		         inputfilename
+		        ) 
+       <foreach collection="list" item="item" index="index" separator="union all" >  
+		 		select #{item.recordtype},
+		         #{item.merchantId},      
+		         #{item.dataBuffer},
+		         #{item.errcode},
+		         #{item.inputfilename}
+       </foreach>  
+    </insert>  
+
+</mapper>
